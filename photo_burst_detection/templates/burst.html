@@ -21,11 +21,11 @@
                             {% for dir in directories %}
                             <li class="position-relative">
                                 {% if '/' + current == dir.link %}
-                                <a href="/burst{{ dir.link }}" class="dropdown-item active">{{ dir.link }}
+                                <a href="/burst/{{ dir.link }}" class="dropdown-item active">{{ dir.link }}
                                     <span class="badge text-bg-secondary">{{ dir.size }}</span>
                                 </a>
                                 {% else %}
-                                <a href="/burst{{ dir.link }}" class="dropdown-item">{{ dir.link }}
+                                <a href="/burst/{{ dir.link }}" class="dropdown-item">{{ dir.link }}
                                     <span class="badge text-bg-secondary">{{ dir.size }}</span>
                                 </a>
                                 {% endif %}

@@ -1,12 +1,16 @@
-from flask import render_template, send_from_directory, redirect, url_for, request, render_template_string
+from flask import render_template, send_from_directory, redirect, url_for, request
 from flask_ldap3_login.forms import LDAPLoginForm
 from flask_login import current_user, login_user, logout_user
 
 from photo_burst_detection import app, scanner
+from photo_burst_detection.auth import users
 
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
+    # Redirect users who are already logged in.
+    if current_user and not current_user.is_anonymous:
+        return redirect('/')
     form = LDAPLoginForm()
     if form.validate_on_submit():
         login_user(form.user)
