@@ -39,7 +39,7 @@ waitress-serve --listen=*:8000 photo_burst_detection:app
 | PHOTO_BURST_DETECTION_PATH | start path                              |
 | SECRET_KEY                 | (default value = 'secret')              |
 | LDAP_HOST                  |                                         |
-| LDAP_PORT                  | (default value = '22')                  |
+| LDAP_PORT                  | (default value = '389')                 |
 | LDAP_BASE_DN               |                                         |
 | LDAP_USER_DN               |                                         |
 | LDAP_GROUP_DN              |                                         |

@@ -12,7 +12,7 @@ app.config.update({
     'SECRET_KEY': os.environ.get('SECRET_KEY', 'secret'),
 
     'LDAP_HOST': os.environ['LDAP_HOST'],
-    'LDAP_PORT': int(os.environ.get('LDAP_PORT', '22')),
+    'LDAP_PORT': int(os.environ.get('LDAP_PORT', '389')),
     'LDAP_BASE_DN': os.environ['LDAP_BASE_DN'],
     'LDAP_USER_DN': os.environ['LDAP_USER_DN'],
     'LDAP_GROUP_DN': os.environ['LDAP_GROUP_DN'],
