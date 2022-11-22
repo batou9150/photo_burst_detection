@@ -8,7 +8,7 @@ class Scanner:
     directories = []
 
     def __init__(self, path, logger):
-        self.path = path
+        self.path = path.rstrip('/').rstrip('\\')
         self.logger = logger
         self.load_directories()
 
