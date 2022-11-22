@@ -34,17 +34,18 @@ waitress-serve --listen=*:8000 photo_burst_detection:app
 
 ## configuration
 
-| variable                   | description                             |
-|----------------------------|-----------------------------------------|
-| PHOTO_BURST_DETECTION_PATH | start path                              |
-| SECRET_KEY                 | (default value = 'secret')              |
-| LDAP_HOST                  |                                         |
-| LDAP_PORT                  | (default value = '389')                 |
-| LDAP_BASE_DN               |                                         |
-| LDAP_USER_DN               |                                         |
-| LDAP_GROUP_DN              |                                         |
-| LDAP_USER_RDN_ATTR         | (default value = 'uid')                 |
-| LDAP_USER_LOGIN_ATTR       | (default value = 'uid')                 |
-| LDAP_BIND_USER_DN          |                                         |
-| LDAP_BIND_USER_PASSWORD    |                                         |
-| LDAP_GROUP_OBJECT_FILTER   | (default value = '(objectclass=group)') |
+| variable                     | description                             |
+|------------------------------|-----------------------------------------|
+| PHOTO_BURST_DETECTION_CONFIG | config file (optional)                  |
+| PHOTO_BURST_DETECTION_PATH   | start path                              |
+| SECRET_KEY                   | (default value = 'secret')              |
+| LDAP_HOST                    |                                         |
+| LDAP_PORT                    | (default value = '389')                 |
+| LDAP_BASE_DN                 |                                         |
+| LDAP_USER_DN                 |                                         |
+| LDAP_GROUP_DN                |                                         |
+| LDAP_USER_RDN_ATTR           | (default value = 'uid')                 |
+| LDAP_USER_LOGIN_ATTR         | (default value = 'uid')                 |
+| LDAP_BIND_USER_DN            |                                         |
+| LDAP_BIND_USER_PASSWORD      |                                         |
+| LDAP_GROUP_OBJECT_FILTER     | (default value = '(objectclass=group)') |
