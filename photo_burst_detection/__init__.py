@@ -7,14 +7,15 @@ from photo_burst_detection.scan import Scanner
 
 app = Flask(__name__)
 app.config.update({
-    'PHOTO_BURST_DETECTION_PATH': os.environ.get('PHOTO_BURST_DETECTION_PATH'),
+    'PHOTO_BURST_DETECTION_PATH': os.environ['PHOTO_BURST_DETECTION_PATH'],
 
     'SECRET_KEY': os.environ.get('SECRET_KEY', 'secret'),
 
-    'LDAP_HOST': os.environ.get('LDAP_HOST'),
-    'LDAP_BASE_DN': os.environ.get('LDAP_BASE_DN'),
-    'LDAP_USER_DN': os.environ.get('LDAP_USER_DN'),
-    'LDAP_GROUP_DN': os.environ.get('LDAP_GROUP_DN'),
+    'LDAP_HOST': os.environ['LDAP_HOST'],
+    'LDAP_PORT': os.environ.get('LDAP_PORT', '22'),
+    'LDAP_BASE_DN': os.environ['LDAP_BASE_DN'],
+    'LDAP_USER_DN': os.environ['LDAP_USER_DN'],
+    'LDAP_GROUP_DN': os.environ['LDAP_GROUP_DN'],
     'LDAP_USER_RDN_ATTR': os.environ.get('LDAP_USER_RDN_ATTR', 'uid'),
     'LDAP_USER_LOGIN_ATTR': os.environ.get('LDAP_USER_LOGIN_ATTR', 'uid'),
     'LDAP_BIND_USER_DN': os.environ.get('LDAP_BIND_USER_DN'),

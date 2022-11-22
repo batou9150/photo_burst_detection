@@ -3,7 +3,7 @@
 ## install
 
 ```shell
-git clone https://gitlab.com/batou9150/photo_burst_detection.git
+git clone git@gitlab.com:batou9150/photo_burst_detection.git
 cd photo_burst_detection
 python3 setup.py install
 ```
@@ -34,16 +34,17 @@ waitress-serve --listen=*:8000 photo_burst_detection:app
 
 ## configuration
 
-| variable                   | description           |
-|----------------------------|-----------------------|
-| PHOTO_BURST_DETECTION_PATH | start path            |
-| SECRET_KEY                 | 'secret'              |
-| LDAP_HOST                  |                       |
-| LDAP_BASE_DN               |                       |
-| LDAP_USER_DN               |                       |
-| LDAP_GROUP_DN              |                       |
-| LDAP_USER_RDN_ATTR         | 'uid'                 |
-| LDAP_USER_LOGIN_ATTR       | 'uid'                 |
-| LDAP_BIND_USER_DN          |                       |
-| LDAP_BIND_USER_PASSWORD    |                       |
-| LDAP_GROUP_OBJECT_FILTER   | '(objectclass=group)' |
+| variable                   | description                             |
+|----------------------------|-----------------------------------------|
+| PHOTO_BURST_DETECTION_PATH | start path                              |
+| SECRET_KEY                 | (default value = 'secret')              |
+| LDAP_HOST                  |                                         |
+| LDAP_PORT                  | (default value = '22')                  |
+| LDAP_BASE_DN               |                                         |
+| LDAP_USER_DN               |                                         |
+| LDAP_GROUP_DN              |                                         |
+| LDAP_USER_RDN_ATTR         | (default value = 'uid')                 |
+| LDAP_USER_LOGIN_ATTR       | (default value = 'uid')                 |
+| LDAP_BIND_USER_DN          |                                         |
+| LDAP_BIND_USER_PASSWORD    |                                         |
+| LDAP_GROUP_OBJECT_FILTER   | (default value = '(objectclass=group)') |
