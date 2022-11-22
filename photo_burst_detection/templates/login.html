@@ -6,7 +6,9 @@
 <div class="form-signin w-100 m-auto text-center">
     {% if form.errors %}
     <div class="alert alert-warning" role="alert">
-        {{ form.errors.username[0] }}
+        {% for key, value in form.errors.items() %}
+        {{ key }} = {{ value }}<br>
+        {% endfor %}
     </div>
     {% endif %}
     <form method="POST">
