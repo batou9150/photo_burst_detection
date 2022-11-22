@@ -20,11 +20,13 @@ config = {'SECRET_KEY': 'secret'}
 if 'PHOTO_BURST_DETECTION_CONFIG' in os.environ:
     with open(os.environ['PHOTO_BURST_DETECTION_CONFIG'], 'r') as f:
         for line in f:
+            if line.startswith('#'):
+                continue
             try:
-                key, value = line.split('=')
+                key, value = line.strip().split('=', 1)
                 config[key] = value
             except Exception as e:
-                print(f'error : {e}')
+                print(f'error : {e} on {line}')
 
 for var in __envvars:
     if var in os.environ:
