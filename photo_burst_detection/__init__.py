@@ -15,6 +15,7 @@ app.logger.setLevel(gunicorn_logger.level)
 
 scanner = Scanner(
     path=app.config.get('PHOTO_BURST_DETECTION_PATH'),
+    logger=app.logger,
 )
 
 if 1 == 1:

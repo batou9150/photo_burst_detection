@@ -7,15 +7,16 @@ from datetime import datetime, timedelta
 class Scanner:
     directories = []
 
-    def __init__(self, path):
+    def __init__(self, path, logger):
         self.path = path
+        self.logger = logger
         self.load_directories()
 
     def get_link(self, path):
         return path.replace(self.path, '').replace('\\', '/')
 
-    def get_fullpath(self, path):
-        return os.path.join(self.path, path)
+    def get_fullpath(self, *paths):
+        return os.path.join(self.path, *paths)
 
     def load_directories(self):
         self.directories = []
@@ -44,8 +45,10 @@ class Scanner:
         prev_date = datetime(1970, 1, 1)
         prev_file = None
 
+        pathname = self.get_fullpath(path, '*.jpg')
+        self.logger.info(f'Scanner:get_bursts from {pathname}')
         results = [[]]
-        for file in sorted(glob.glob(self.get_fullpath(path) + '\\*.jpg', recursive=True)):
+        for file in sorted(glob.glob(pathname, recursive=True)):
             date = extract_date(file)
             if date is None:
                 print('WARN ' + file)

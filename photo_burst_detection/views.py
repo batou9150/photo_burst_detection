@@ -3,16 +3,17 @@ from flask_ldap3_login.forms import LDAPLoginForm
 from flask_login import current_user, login_user, logout_user
 
 from photo_burst_detection import app, scanner
-from photo_burst_detection.auth import users
 
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     # Redirect users who are already logged in.
     if current_user and not current_user.is_anonymous:
+        app.logger.info('user already logged in')
         return redirect('/')
     form = LDAPLoginForm()
     if form.validate_on_submit():
+        app.logger.info(f'login success for {form.user}')
         login_user(form.user)
         return redirect('/')
     form.submit.label.text = 'Sign in'
@@ -42,7 +43,7 @@ def burst(path):
     # Redirect users who are not logged in.
     if not current_user or current_user.is_anonymous:
         return redirect(url_for('login'))
-
+    app.logger.info(f'get burst in {path}')
     return render_template('burst.html',
                            current=path,
                            directories=scanner.get_directories(),
