@@ -19,19 +19,37 @@
 
 <body class="d-flex flex-column h-100">
 
-<header>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <div class="container">
-            <a class="navbar-brand" href="#">
-                <img src="{{ url_for('static',filename='favicon.svg') }}" alt="" width="30"
-                     class="d-inline-block align-text-top mx-2">
-                photo burst detection
-            </a>
-            <form action="/refresh">
-            <button class="btn btn-outline-dark" type="submit"><i class="bi bi-arrow-clockwise"></i></button>
-            </form>
+<header class="py-1 mb-3 border-bottom">
+    <div class="d-flex align-items-center">
+        <div class="me-auto ps-3">
+            <a href="#" class="link-dark text-decoration-none"><i class="bi bi-image fs-2"></i></a>
         </div>
-    </nav>
+        <div class="pe-3">
+            {% if current_user.is_anonymous %}
+            <img src="https://www.gravatar.com/avatar/?d=mp" width="32" height="32" class="rounded-circle">
+            {% else %}
+            <div class="dropdown">
+                <a href="#" class="d-block link-dark text-decoration-none dropdown-toggle" data-bs-toggle="dropdown"
+                   aria-expanded="false">
+                    <img src="{{ current_user.gravatar_url }}" width="32" height="32" class="rounded-circle">
+                </a>
+                <ul class="dropdown-menu text-small">
+                    <li><span class="dropdown-item">{{ current_user.email }}</span></li>
+                    <li>
+                        <hr class="dropdown-divider">
+                    </li>
+                    <li><a class="dropdown-item" href="/">Overview</a></li>
+                    <li><a class="dropdown-item" href="/burst">Burst</a></li>
+                    <li>
+                        <hr class="dropdown-divider">
+                    </li>
+                    <li><a class="dropdown-item" href="/refresh">Refresh</a></li>
+                    <li><a class="dropdown-item" href="/logout">Sign out</a></li>
+                </ul>
+            </div>
+            {% endif %}
+        </div>
+    </div>
 </header>
 
 {% block content %}{% endblock %}

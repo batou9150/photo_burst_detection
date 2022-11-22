@@ -68,7 +68,8 @@ class Scanner:
             'files': [{
                 'name': os.path.basename(f),
                 'link': '/photo' + self.get_link(f),
-                'datetime': extract_date(f).strftime('%d/%m/%Y %H:%M:%S.%f').rstrip('0'),
+                'datetime_fmt': extract_date(f).strftime('%d/%m/%Y %H:%M:%S'),
+                'datetime': extract_date(f).strftime('%d/%m/%Y %H:%M:%S.%f'),
             } for f in sorted(set(files))],
             'size': len(set(files))} for i, files in enumerate(results)]
 
