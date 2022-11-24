@@ -16,16 +16,17 @@ class Scanner:
         return path.replace(self.path, '').replace('\\', '/')
 
     def get_fullpath(self, *paths):
+        paths = [os.path.normpath(p).lstrip(os.sep) for p in paths]
         return os.path.join(self.path, *paths)
 
     def load_directories(self):
         self.directories = []
         for root, dirs, files in os.walk(self.path):
             if root != self.path and not root.lower().endswith('video') and len(files) > 0:
-                self.directories.append({'name': root,
+                self.directories.append({'name': os.path.basename(root),
                                          'link': self.get_link(root),
-                                         'path': os.path.join(root, root),
                                          'size': len(files),
+                                         'bursts': len(self.get_bursts(self.get_link(root))),
                                          })
 
     def refresh(self):
@@ -67,7 +68,7 @@ class Scanner:
         results = sorted(results, key=len, reverse=True)
 
         return [{
-            'id': i,
+            'id': i + 1,
             'files': [{
                 'name': os.path.basename(f),
                 'link': '/photo' + self.get_link(f),

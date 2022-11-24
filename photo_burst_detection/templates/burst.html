@@ -20,15 +20,12 @@
                         <ul class="dropdown-menu">
                             {% for dir in directories %}
                             <li class="position-relative">
-                                {% if '/' + current == dir.link %}
-                                <a href="/burst{{ dir.link }}" class="dropdown-item active">{{ dir.link }}
-                                    <span class="badge text-bg-secondary">{{ dir.size }}</span>
+                                <a href="/burst{{ dir.link }}" class="dropdown-item {{ 'active' if '/' + current == dir.link }}">
+                                    {{ dir.link }}
+                                    <span class="badge {{ 'text-bg-secondary' if dir.bursts < 5 else 'text-bg-primary' }}">
+                                        {{ dir.bursts }} / {{ dir.size }}
+                                    </span>
                                 </a>
-                                {% else %}
-                                <a href="/burst{{ dir.link }}" class="dropdown-item">{{ dir.link }}
-                                    <span class="badge text-bg-secondary">{{ dir.size }}</span>
-                                </a>
-                                {% endif %}
                             </li>
                             {% endfor %}
                         </ul>
@@ -41,25 +38,16 @@
         <div class="col">
             <div class="accordion" id="accordionExample">
                 {% for burst in bursts %}
-                {% if burst.id == 0 %}
-                {% set header_class = 'accordion-button' %}
-                {% set header_expanded = 'true' %}
-                {% set body_class = 'accordion-collapsecollapse show' %}
-                {% else %}
-                {% set header_class = 'accordion-button collapsed' %}
-                {% set header_expanded = 'false' %}
-                {% set body_class = 'accordion-collapse collapse' %}
-                {% endif %}
                 <div class="accordion-item">
                     <h2 class="accordion-header" id="burst-{{ burst.id }}-header">
-                        <button class="{{ header_class }}" type="button"
+                        <button class="accordion-button {{ 'collapsed' if burst.id != 1 }}" type="button"
                                 data-bs-toggle="collapse"
-                                data-bs-target="#burst-{{ burst.id }}-body" aria-expanded="{{ header_expanded }}"
+                                data-bs-target="#burst-{{ burst.id }}-body" aria-expanded="{{ burst.id == 1 }}"
                                 aria-controls="burst-{{ burst.id }}-body">
                             Burst #{{ burst.id }} on {{ bursts | length }} with {{ burst.size }} duplicates
                         </button>
                     </h2>
-                    <div id="burst-{{ burst.id }}-body" class="{{ body_class }}"
+                    <div id="burst-{{ burst.id }}-body" class="accordion-collapse collapse {{ 'show' if burst.id == 1 }}"
                          aria-labelledby="burst-{{ burst.id }}-header" data-bs-parent="#accordionExample">
                         <div class="accordion-body d-flex flex-wrap justify-content-center px-0">
                             {% for file in burst.files %}

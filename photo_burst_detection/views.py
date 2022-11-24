@@ -74,4 +74,4 @@ def delete_photo(path):
         scanner.delete_photo(path)
         return '', 204
     except Exception as e:
-        return e, 500
+        return str(e), 500
