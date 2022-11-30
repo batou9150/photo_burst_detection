@@ -28,6 +28,7 @@ class Scanner:
                                          'size': len(files),
                                          'bursts': len(self.get_bursts(self.get_link(root))),
                                          })
+        self.directories = sorted(self.directories, key=lambda d: d['link'])
 
     def refresh(self):
         self.load_directories()

@@ -11,7 +11,7 @@
         <div class="col">
             <nav aria-label="breadcrumb">
                 <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="/">Home</a></li>
+                    <li class="breadcrumb-item"><a href="/?seconds={{ request.args.get('seconds', '2') }}">Home</a></li>
                     <li class="breadcrumb-item dropdown active" aria-current="page">
                         <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown"
                                 aria-expanded="false">
@@ -20,7 +20,8 @@
                         <ul class="dropdown-menu">
                             {% for dir in directories %}
                             <li class="position-relative">
-                                <a href="/burst{{ dir.link }}" class="dropdown-item {{ 'active' if '/' + current == dir.link }}">
+                                <a href="/burst{{ dir.link }}?seconds={{ request.args.get('seconds', '2') }}"
+                                   class="dropdown-item {{ 'active' if '/' + current == dir.link }}">
                                     {{ dir.link }}
                                     <span class="badge {{ 'text-bg-secondary' if dir.bursts < 5 else 'text-bg-primary' }}">
                                         {{ dir.bursts }} / {{ dir.size }}
