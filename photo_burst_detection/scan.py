@@ -50,8 +50,8 @@ class Scanner:
         pathname = self.get_fullpath(path, '*.jpg')
         self.logger.info(f'Scanner:get_bursts from {pathname}')
         results = [[]]
-        for file in sorted(glob.glob(pathname, recursive=True)):
-            date = extract_date(file)
+        files = sorted([[f, extract_date(f)] for f in glob.glob(pathname, recursive=True)], key=lambda x: str(x[1]))
+        for [file, date] in files:
             if date is None:
                 print('WARN ' + file)
                 continue
