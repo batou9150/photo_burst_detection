@@ -51,6 +51,17 @@ def burst(path):
                            )
 
 
+@app.route('/naming')
+def naming():
+    # Redirect users who are not logged in.
+    if not current_user or current_user.is_anonymous:
+        return redirect(url_for('login'))
+
+    return render_template('naming.html',
+                           namings=scanner.get_namings(),
+                           )
+
+
 @app.route('/refresh')
 def refresh():
     if not current_user or current_user.is_anonymous:

@@ -43,6 +43,16 @@ class Scanner:
     def get_directories(self, f=None):
         return self.directories if f is None else [d for d in self.directories if f in d]
 
+    def get_namings(self):
+        results = []
+        for root, dirs, files in os.walk(self.path):
+            if root != self.path and not root.lower().endswith('video') and len(files) > 0:
+                results.append({'directory': self.get_link(root),
+                                'prefix': {extract_prefix(f) for f in files if not f.startswith('.')},
+                                'extension': {os.path.splitext(f)[1] for f in files if not f.startswith('.')},
+                                })
+        return results
+
     def get_bursts(self, path, seconds=2):
         prev_date = datetime(1970, 1, 1)
         prev_file = None
@@ -85,3 +95,10 @@ def extract_date(s):
         return None
     sdate = match.group(1)
     return datetime.strptime(sdate, '%Y%m%d_%H%M%S%f')
+
+
+def extract_prefix(s):
+    match = os.path.basename(s).split('_')
+    if len(match) == 0:
+        return None
+    return match[0]
