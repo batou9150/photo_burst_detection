@@ -51,7 +51,7 @@ class Scanner:
                                 'prefix': {extract_prefix(f) for f in files if not f.startswith('.')},
                                 'extension': {os.path.splitext(f)[1] for f in files if not f.startswith('.')},
                                 })
-        return results
+        return sorted(results, key=lambda x: x['directory'])
 
     def get_bursts(self, path, seconds=2):
         prev_date = datetime(1970, 1, 1)
