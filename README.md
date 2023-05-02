@@ -1,6 +1,14 @@
 # photo_burst_detection
 
+[![pypi version](https://img.shields.io/pypi/v/photo_burst_detection.svg)](https://pypi.org/project/photo_burst_detection/)
+
 ## install
+
+```shell
+pip install photo_burst_detection
+```
+
+### install from sources
 
 ```shell
 git clone https://github.com/batou9150/photo_burst_detection.git
