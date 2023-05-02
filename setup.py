@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 
+import os
 from setuptools import setup, find_packages
 
 with open('README.md') as f:
@@ -7,7 +8,7 @@ with open('README.md') as f:
 
 setup(
     name='photo_burst_detection',
-    version='1.0.0',
+    version=os.environ.get('GITHUB_REF_NAME', '0.0.0'),
     author='batou9150',
     packages=find_packages(),
     include_package_data=True,
