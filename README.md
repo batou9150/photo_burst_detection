@@ -3,7 +3,7 @@
 ## install
 
 ```shell
-git clone git@gitlab.com:batou9150/photo_burst_detection.git
+git clone https://github.com/batou9150/photo_burst_detection.git
 cd photo_burst_detection
 python3 setup.py install
 ```
