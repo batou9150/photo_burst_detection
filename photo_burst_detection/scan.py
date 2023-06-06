@@ -88,6 +88,17 @@ class Scanner:
             } for f in sorted(set(files))],
             'size': len(set(files))} for i, files in enumerate(results)]
 
+    def get_folder(self, path):
+        pathname = self.get_fullpath(path, '*.jpg')
+        self.logger.info(f'Scanner:get_folder from {pathname}')
+        files = sorted([[f, extract_date(f)] for f in glob.glob(pathname, recursive=True)], key=lambda x: str(x[1]))
+        return [{
+                'name': os.path.basename(f),
+                'link': '/photo' + self.get_link(f),
+                'datetime_fmt': extract_date(f).strftime('%d/%m/%Y %H:%M:%S'),
+                'datetime': extract_date(f).strftime('%d/%m/%Y %H:%M:%S.%f'),
+            } for [f, _] in files]
+
 
 def extract_date(s):
     match = re.search(r'_(\d{8}_\d{6,8})', s)

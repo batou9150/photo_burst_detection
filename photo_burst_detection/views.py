@@ -51,6 +51,19 @@ def burst(path):
                            )
 
 
+@app.route('/folder/<path:path>')
+def folder(path):
+    # Redirect users who are not logged in.
+    if not current_user or current_user.is_anonymous:
+        return redirect(url_for('login'))
+    app.logger.info(f'get burst in {path}')
+    return render_template('folder.html',
+                           current=path,
+                           directories=scanner.get_directories(),
+                           folder=scanner.get_folder(path),
+                           )
+
+
 @app.route('/naming')
 def naming():
     # Redirect users who are not logged in.
