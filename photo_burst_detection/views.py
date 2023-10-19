@@ -34,6 +34,7 @@ def index():
 
     return render_template('index.html',
                            directories=scanner.get_directories(),
+                           path=scanner.path,
                            )
 
 
@@ -80,6 +81,23 @@ def refresh():
     if not current_user or current_user.is_anonymous:
         return '', 401
     scanner.refresh()
+    return redirect(url_for('index'))
+
+
+@app.route('/change-root')
+def change_root_list_sibling():
+    if not current_user or current_user.is_anonymous:
+        return '', 401
+    return render_template('change_root.html',
+                           siblings=scanner.get_siblings(),
+                           )
+
+
+@app.route('/change-root/<path:path>')
+def change_root(path):
+    if not current_user or current_user.is_anonymous:
+        return '', 401
+    scanner.set_path(scanner.parent, path)
     return redirect(url_for('index'))
 
 

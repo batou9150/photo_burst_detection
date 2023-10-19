@@ -1,0 +1,21 @@
+{% extends "layout.html" %}
+
+{% block title %}Change Root{% endblock %}
+
+{% block menu %}
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <ul>
+        {% for sibling in siblings %}
+        <li>
+            <a href="/change-root/{{ sibling }}" class="dropdown-item">
+                {{ sibling }}
+            </a>
+        </li>
+        {% endfor %}
+    </ul>
+</div>
+{% endblock %}
+

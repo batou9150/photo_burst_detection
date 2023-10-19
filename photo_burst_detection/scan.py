@@ -6,11 +6,23 @@ from datetime import datetime, timedelta
 
 class Scanner:
     directories = []
+    path = None
 
     def __init__(self, path, logger):
-        self.path = path.rstrip('/').rstrip('\\')
         self.logger = logger
+        self.parent = os.path.dirname(path)
+        self.set_path(path)
+
+    def set_path(self, *path):
+        self.path = os.path.join(*path).rstrip('/').rstrip('\\')
         self.load_directories()
+
+    def get_siblings(self):
+        siblings = [directory
+                    for directory in os.listdir(self.parent)
+                    if not directory.startswith('.') and not directory.startswith('@')
+                    ]
+        return siblings
 
     def get_link(self, path):
         return path.replace(self.path, '').replace('\\', '/')
@@ -93,11 +105,11 @@ class Scanner:
         self.logger.info(f'Scanner:get_folder from {pathname}')
         files = sorted([[f, extract_date(f)] for f in glob.glob(pathname, recursive=True)], key=lambda x: str(x[1]))
         return [{
-                'name': os.path.basename(f),
-                'link': '/photo' + self.get_link(f),
-                'datetime_fmt': extract_date(f).strftime('%d/%m/%Y %H:%M:%S'),
-                'datetime': extract_date(f).strftime('%d/%m/%Y %H:%M:%S.%f'),
-            } for [f, _] in files]
+            'name': os.path.basename(f),
+            'link': '/photo' + self.get_link(f),
+            'datetime_fmt': extract_date(f).strftime('%d/%m/%Y %H:%M:%S'),
+            'datetime': extract_date(f).strftime('%d/%m/%Y %H:%M:%S.%f'),
+        } for [f, _] in files]
 
 
 def extract_date(s):
