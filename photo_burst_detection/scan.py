@@ -10,18 +10,19 @@ class Scanner:
 
     def __init__(self, path, logger):
         self.logger = logger
+        path = path.rstrip('/').rstrip('\\')
         self.parent = os.path.dirname(path)
         self.set_path(path)
 
     def set_path(self, *path):
-        self.path = os.path.join(*path).rstrip('/').rstrip('\\')
+        self.path = os.path.join(*path)
         self.load_directories()
 
     def get_siblings(self):
-        siblings = [directory
-                    for directory in os.listdir(self.parent)
-                    if not directory.startswith('.') and not directory.startswith('@')
-                    ]
+        siblings = sorted([directory
+                           for directory in os.listdir(self.parent)
+                           if not directory.startswith('.') and not directory.startswith('@')
+                           ])
         return siblings
 
     def get_link(self, path):
