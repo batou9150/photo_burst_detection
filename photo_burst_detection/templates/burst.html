@@ -6,7 +6,7 @@
 {% endblock %}
 
 {% block content %}
-<div class="container">
+<div class="px-3">
     <div class="row">
         <div class="col">
             <nav aria-label="breadcrumb">
@@ -34,6 +34,9 @@
                 </ol>
             </nav>
         </div>
+        <div class="col-1 d-flex">
+            <input type="range" class="form-range" min="10" max="70" value="10" step="10" oninput="zoom(this.value)" onchange="zoom(this.value)">
+        </div>
         <div class="col-3 d-flex justify-content-end">
             <a href="/folder/{{ current }}" class="btn btn-outline-secondary btn-sm mb-3">See folder</a>
         </div>
@@ -53,9 +56,9 @@
                     </h2>
                     <div id="burst-{{ burst.id }}-body" class="accordion-collapse collapse {{ 'show' if burst.id == 1 }}"
                          aria-labelledby="burst-{{ burst.id }}-header" data-bs-parent="#accordionExample">
-                        <div class="accordion-body d-flex flex-wrap justify-content-center px-0">
+                        <div class="accordion-body d-flex flex-wrap justify-content-center px-0 py-1">
                             {% for file in burst.files %}
-                            <div class="card m-1" style="width: 10rem;">
+                            <div class="card m-1 card-photo">
                                 <img src="{{ file.link }}" loading="lazy" class="card-img-top"
                                      data-bs-toggle="tooltip" data-bs-placement="top"
                                      data-bs-title="{{ file.link }}">
@@ -90,6 +93,11 @@ function delete_photo(element, link) {
   element.parentElement.parentElement.classList.add("fade-out-half");
   console.info('DELETE ' + link);
   fetch(link, {method: 'DELETE'});
+}
+
+function zoom(value) {
+    const cardPhotoList = document.querySelectorAll('.card-photo')
+    const c = [...cardPhotoList].map(card => card.style.width=value+'rem')
 }
 
 const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
