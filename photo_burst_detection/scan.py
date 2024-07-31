@@ -96,8 +96,8 @@ class Scanner:
             'files': [{
                 'name': os.path.basename(f),
                 'link': '/photo' + self.get_link(f),
-                'datetime_fmt': extract_date(f).strftime('%d/%m/%Y %H:%M:%S'),
-                'datetime': extract_date(f).strftime('%d/%m/%Y %H:%M:%S.%f'),
+                'datetime_fmt': extract_date(f, '%d/%m/%Y %H:%M:%S'),
+                'datetime': extract_date(f, '%d/%m/%Y %H:%M:%S.%f'),
             } for f in sorted(set(files))],
             'size': len(set(files))} for i, files in enumerate(results)]
 
@@ -108,17 +108,17 @@ class Scanner:
         return [{
             'name': os.path.basename(f),
             'link': '/photo' + self.get_link(f),
-            'datetime_fmt': extract_date(f).strftime('%d/%m/%Y %H:%M:%S'),
-            'datetime': extract_date(f).strftime('%d/%m/%Y %H:%M:%S.%f'),
+            'datetime_fmt': extract_date(f, '%d/%m/%Y %H:%M:%S'),
+            'datetime': extract_date(f, '%d/%m/%Y %H:%M:%S.%f'),
         } for [f, _] in files]
 
 
-def extract_date(s):
+def extract_date(s, dst_fmt=None):
     match = re.search(r'_(\d{8}_\d{6,8})', s)
     if not match:
         return None
-    sdate = match.group(1)
-    return datetime.strptime(sdate, '%Y%m%d_%H%M%S%f')
+    sdate = datetime.strptime(match.group(1), '%Y%m%d_%H%M%S%f')
+    return sdate.strftime(dst_fmt) if dst_fmt else sdate
 
 
 def extract_prefix(s):
