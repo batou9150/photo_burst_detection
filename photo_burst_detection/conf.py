@@ -37,6 +37,9 @@ for var in __envvars:
     if var in os.environ:
         config[var] = os.environ[var]
 
+if 'LDAP_PORT' in config:
+    config['LDAP_PORT'] = int(config['LDAP_PORT'])
+
 if not config.get('SECRET_KEY') or config['SECRET_KEY'] == 'secret':
     raise RuntimeError('SECRET_KEY must be set to a random value, '
                        'e.g. python3 -c "import secrets; print(secrets.token_hex())"')
