@@ -1,3 +1,4 @@
 flask
 flask-login
 flask-ldap3-login
+flask-wtf

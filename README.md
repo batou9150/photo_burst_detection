@@ -24,6 +24,7 @@ python3 setup.py install
 pip3 install gunicorn
 
 export PHOTO_BURST_DETECTION_PATH=<start path>
+export SECRET_KEY=$(python3 -c 'import secrets; print(secrets.token_hex())')
 export LDAP_HOST=ad.mydomain.com
 export LDAP_BASE_DN=dc=mydomain,dc=com
 
@@ -34,6 +35,7 @@ gunicorn -b 0.0.0.0:8000 photo_burst_detection:app
 
 ```shell
 export PHOTO_BURST_DETECTION_PATH=<start path>
+export SECRET_KEY=$(python3 -c 'import secrets; print(secrets.token_hex())')
 export LDAP_HOST=ad.mydomain.com
 export LDAP_BASE_DN=dc=mydomain,dc=com
 
@@ -46,7 +48,7 @@ waitress-serve --listen=*:8000 photo_burst_detection:app
 |------------------------------|-----------------------------------------|
 | PHOTO_BURST_DETECTION_CONFIG | config file (optional)                  |
 | PHOTO_BURST_DETECTION_PATH   | start path                              |
-| SECRET_KEY                   | (default value = 'secret')              |
+| SECRET_KEY                   | required, random value                  |
 | LDAP_HOST                    |                                         |
 | LDAP_PORT                    | (default value = '389')                 |
 | LDAP_BASE_DN                 |                                         |

@@ -15,7 +15,12 @@ __envvars = [
     'LDAP_GROUP_OBJECT_FILTER',
 ]
 
-config = {'SECRET_KEY': 'secret'}
+config = {
+    'SESSION_COOKIE_SAMESITE': 'Lax',
+    'REMEMBER_COOKIE_SAMESITE': 'Lax',
+    # CSRF tokens stay valid for the whole session, so a page left open does not break deletes
+    'WTF_CSRF_TIME_LIMIT': None,
+}
 
 if 'PHOTO_BURST_DETECTION_CONFIG' in os.environ:
     with open(os.environ['PHOTO_BURST_DETECTION_CONFIG'], 'r') as f:
@@ -32,9 +37,17 @@ for var in __envvars:
     if var in os.environ:
         config[var] = os.environ[var]
 
+if not config.get('SECRET_KEY') or config['SECRET_KEY'] == 'secret':
+    raise RuntimeError('SECRET_KEY must be set to a random value, '
+                       'e.g. python3 -c "import secrets; print(secrets.token_hex())"')
+
+
+def __is_secret(key):
+    return 'PASSWORD' in key or 'SECRET' in key
+
 
 print('#####################')
 print('### configuration ###')
 for k, v in config.items():
-    print(f'{k}={v}')
+    print(f'{k}={"********" if __is_secret(k) else v}')
 print('#####################')

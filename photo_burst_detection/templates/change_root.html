@@ -10,9 +10,12 @@
     <ul>
         {% for sibling in siblings %}
         <li>
-            <a href="/change-root/{{ sibling }}" class="dropdown-item">
-                {{ sibling }}
-            </a>
+            <form method="POST" action="/change-root">
+                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                <button type="submit" name="root" value="{{ sibling }}" class="dropdown-item">
+                    {{ sibling }}
+                </button>
+            </form>
         </li>
         {% endfor %}
     </ul>

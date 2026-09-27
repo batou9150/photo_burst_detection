@@ -50,7 +50,7 @@
                          data-bs-toggle="tooltip" data-bs-placement="top"
                          data-bs-title="{{ file.link }}">
                     <div class="card-body text-center p-1">
-                        <a class="btn btn-primary" onclick="delete_photo(this, '{{ file.link }}')">
+                        <a class="btn btn-primary" data-link="{{ file.link }}" onclick="delete_photo(this, this.dataset.link)">
                             <i class="bi bi-trash3"></i>
                         </a>
                     </div>
@@ -68,12 +68,21 @@
 {% block javascript %}
 <script>
 function delete_photo(element, link) {
+  const card = element.parentElement.parentElement;
   element.classList.add("disabled");
   element.classList.add("btn-secondary");
   element.classList.remove("btn-primary");
-  element.parentElement.parentElement.classList.add("fade-out-half");
+  card.classList.add("fade-out-half");
   console.info('DELETE ' + link);
-  fetch(link, {method: 'DELETE'});
+  const csrfToken = document.querySelector('meta[name="csrf-token"]').content;
+  fetch(link, {method: 'DELETE', headers: {'X-CSRFToken': csrfToken}}).then(response => {
+    if (!response.ok) throw new Error(response.status + ' ' + response.statusText);
+  }).catch(error => {
+    console.error('DELETE ' + link + ' failed: ' + error);
+    element.classList.remove("disabled", "btn-secondary");
+    element.classList.add("btn-danger");
+    card.classList.remove("fade-out-half");
+  });
 }
 
 function zoom(value) {
