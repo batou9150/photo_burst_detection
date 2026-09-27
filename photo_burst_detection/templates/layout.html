@@ -5,6 +5,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>photo burst detection {% block title %}{% endblock %}</title>
     <link rel="icon" href="{{ url_for('static',filename='favicon.svg') }}">
     <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.1/dist/jquery.min.js"></script>
@@ -51,7 +52,12 @@
                         <a href="?seconds=10">10</a> -
                         <a href="?seconds=30">30</a>
                     </span></li>
-                    <li><a class="dropdown-item" href="/refresh">Refresh</a></li>
+                    <li>
+                        <form method="POST" action="/refresh">
+                            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                            <button type="submit" class="dropdown-item">Refresh</button>
+                        </form>
+                    </li>
                     <li><a class="dropdown-item" href="/logout">Sign out</a></li>
                 </ul>
             </div>

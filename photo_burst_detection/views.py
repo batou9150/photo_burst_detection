@@ -1,4 +1,4 @@
-from flask import render_template, send_from_directory, redirect, url_for, request
+from flask import render_template, send_from_directory, redirect, url_for, request, abort
 from flask_ldap3_login.forms import LDAPLoginForm
 from flask_login import current_user, login_user, logout_user
 
@@ -76,7 +76,7 @@ def naming():
                            )
 
 
-@app.route('/refresh')
+@app.route('/refresh', methods=['POST'])
 def refresh():
     if not current_user or current_user.is_anonymous:
         return '', 401
@@ -93,11 +93,15 @@ def change_root_list_sibling():
                            )
 
 
-@app.route('/change-root/<path:path>')
-def change_root(path):
+@app.route('/change-root', methods=['POST'])
+def change_root():
     if not current_user or current_user.is_anonymous:
         return '', 401
-    scanner.set_path(scanner.parent, path)
+    root = request.form.get('root')
+    # only allow switching to one of the listed siblings, never an arbitrary path
+    if root not in scanner.get_siblings():
+        abort(400)
+    scanner.set_path(scanner.parent, root)
     return redirect(url_for('index'))
 
 

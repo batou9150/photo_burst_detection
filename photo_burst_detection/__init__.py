@@ -1,6 +1,7 @@
 import logging
 
 from flask import Flask
+from flask_wtf.csrf import CSRFProtect
 
 from photo_burst_detection.scan import Scanner
 from photo_burst_detection.conf import config
@@ -8,6 +9,8 @@ from photo_burst_detection.conf import config
 app = Flask(__name__)
 
 app.config.update(config)
+
+csrf = CSRFProtect(app)
 
 gunicorn_logger = logging.getLogger('gunicorn.error')
 app.logger.handlers = gunicorn_logger.handlers

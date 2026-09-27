@@ -17,6 +17,7 @@ setup(
         'flask',
         'flask-login',
         'flask-ldap3-login',
+        'flask-wtf',
     ],
     description='Flask App for photo burst detection',
     long_description=readme,

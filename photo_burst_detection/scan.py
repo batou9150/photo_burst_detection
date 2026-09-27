@@ -3,6 +3,8 @@ import os
 import re
 from datetime import datetime, timedelta
 
+from werkzeug.security import safe_join
+
 
 class Scanner:
     directories = []
@@ -22,6 +24,7 @@ class Scanner:
         siblings = sorted([directory
                            for directory in os.listdir(self.parent)
                            if not directory.startswith('.') and not directory.startswith('@')
+                           and os.path.isdir(os.path.join(self.parent, directory))
                            ])
         return siblings
 
@@ -29,8 +32,11 @@ class Scanner:
         return path.replace(self.path, '').replace('\\', '/')
 
     def get_fullpath(self, *paths):
-        paths = [os.path.normpath(p).lstrip(os.sep) for p in paths]
-        return os.path.join(self.path, *paths)
+        # safe_join returns None when the result would escape self.path (.., absolute paths, ...)
+        fullpath = safe_join(self.path, *[p.replace('\\', '/').lstrip('/') for p in paths])
+        if fullpath is None:
+            raise ValueError(f'{"/".join(paths)} is outside of {self.path}')
+        return fullpath
 
     def load_directories(self):
         self.directories = []
