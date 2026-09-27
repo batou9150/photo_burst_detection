@@ -22,7 +22,7 @@ setup(
     description='Flask App for photo burst detection',
     long_description=readme,
     long_description_content_type='text/markdown',
-    url='https://gitlab.com/batou9150/photo_burst_detection',
+    url='https://github.com/batou9150/photo_burst_detection',
     classifiers=[
         'Programming Language :: Python :: 3',
         'Operating System :: OS Independent',
