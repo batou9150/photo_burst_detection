@@ -120,10 +120,13 @@ class Scanner:
 
 
 def extract_date(s, dst_fmt=None):
-    match = re.search(r'_(\d{8}_\d{6,8})', s)
+    # _YYYYMMDD_HHMMSS followed by up to 2 optional digits of fractions of a second
+    match = re.search(r'_(\d{8}_\d{6})(\d{0,2})', s)
     if not match:
         return None
-    sdate = datetime.strptime(match.group(1), '%Y%m%d_%H%M%S%f')
+    sdate = datetime.strptime(match.group(1), '%Y%m%d_%H%M%S')
+    if match.group(2):
+        sdate += timedelta(microseconds=int(match.group(2).ljust(6, '0')))
     return sdate.strftime(dst_fmt) if dst_fmt else sdate
 
 

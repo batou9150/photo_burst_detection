@@ -1,3 +1,0 @@
-graft photo_burst_detection/static
-graft photo_burst_detection/templates
-global-exclude *.pyc

@@ -13,7 +13,7 @@ pip install photo_burst_detection
 ```shell
 git clone https://github.com/batou9150/photo_burst_detection.git
 cd photo_burst_detection
-python3 setup.py install
+pip install .
 ```
 
 ## run
@@ -40,6 +40,13 @@ export LDAP_HOST=ad.mydomain.com
 export LDAP_BASE_DN=dc=mydomain,dc=com
 
 waitress-serve --listen=*:8000 photo_burst_detection:app
+```
+
+## tests
+
+```shell
+pip install -e '.[test]'
+pytest
 ```
 
 ## configuration
